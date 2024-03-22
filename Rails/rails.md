@@ -58,7 +58,6 @@ git config --global init.defaultBranch main
 git config --global alias.co checkout
 
 git add -A
-
 git push -u origin main
 
 username: kappajester83
