@@ -3,6 +3,7 @@ Table of Contents
   Obedient Cat
   Mod 26
   Python Wrangling
+  Wave a Flag
 
 Gym
 
@@ -57,6 +58,29 @@ Gym
 
         $ man python
         $ man nano
+
+Wave a flag
+
+Description
+Can you invoke help flags for a tool or binary? This program has extraordinarily helpful information...
+
+https://mercury.picoctf.net/static/a00f554b16385d9970dae424f66ee1ab/warm
+
+This program will only work in the webshell or another Linux computer.
+
+Run this program by entering the following in the Terminal prompt: $ ./warm, but you'll first have to make it executable with $ chmod +x warm
+
+-h and --help are the most common arguments to give to programs to get more information from them!
+
+Not every program implements help features like -h and --help.
+
+$ wget "https://mercury.picoctf.net/static/a00f554b16385d9970dae424f66ee1ab/warm"
+$ chmod +x warm
+$ ./warm
+Hello user! Pass me a -h to learn what I can do!
+$ ./warm -h
+
+picoCTF{b1scu1ts_4nd_gr4vy_18788aaa}
 
 Notes
 
