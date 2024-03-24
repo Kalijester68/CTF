@@ -4,6 +4,8 @@ Table of Contents
   Mod 26
   Python Wrangling
   Wave a Flag
+  Information
+  
 
 Gym
 
