@@ -1,0 +1,12 @@
+https://www.vpngate.net/EN/
+
+Network Settings
+	
+	"+" import from file
+	navigate to .ovpn file
+
+CLI
+
+	$ cd /[directory]
+	$ sudo openvpn {filename}.vpn
+    *  CTRL-C or close terminal to end session
