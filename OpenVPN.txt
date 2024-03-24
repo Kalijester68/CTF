@@ -8,5 +8,7 @@ Network Settings
 CLI
 
 	$ cd /[directory]
-	$ sudo openvpn {filename}.vpn
+	$ sudo openvpn {filename}.ovpn
+    wait for "Initialization Sequence Completed"
+
     *  CTRL-C or close terminal to end session
