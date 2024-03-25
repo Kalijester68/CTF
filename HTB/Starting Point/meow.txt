@@ -1,0 +1,20 @@
+Meow
+
+$ ping {target_IP}
+
+verify connection established with 4 successful replies
+
+$ ^C
+
+$ sudo nmap -sV {target_IP}
+  -sV = service detection flat
+
+$ telnet {target_IP}
+
+Meow login: root
+
+$
+
+$ ls
+$ cat flag.txt
+
