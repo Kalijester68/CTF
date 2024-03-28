@@ -1,10 +1,4 @@
-#PicoCTF - https://picoctf.org/
+# Capture the Flag Exercises
 
-##Obedient Cat
-##Mod 26
-Python Wrangling
-Wave a Flag
-Information
-Nice Netcat
-
-#Hack the Box - https://app.hackthebox.com
+## PicoCTF - https://picoctf.org/
+## Hack the Box - https://www.hackthebox.com/
