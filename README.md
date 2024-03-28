@@ -1,3 +1,10 @@
-The Rails Tuturial - https://www.learnenough.com/ruby-on-rails-7th-edition-tutorial
-PicoCTF - https://picoctf.org/
-Hack the Box - https://app.hackthebox.com
+#PicoCTF - https://picoctf.org/
+
+##Obedient Cat
+##Mod 26
+Python Wrangling
+Wave a Flag
+Information
+Nice Netcat
+
+#Hack the Box - https://app.hackthebox.com
