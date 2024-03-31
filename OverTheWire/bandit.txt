@@ -8,7 +8,7 @@ Level 0
 
 Objective:
 
-The password for the next level is stored in a file called readme located in the home directory. Use this password to log into bandit1 using SSH. Whenever you find a password for a level, use SSH (on port 2220) to log into that level and continue the game.
+The password for the next level is stored in a file called "readme" located in the home directory.  Use this password to log into bandit1 using SSH. Whenever you find a password for a level, use SSH (on port 2220) to log into that level and continue the game.
 
   $ ssh [user@]hostname -p [:port]
   $ ssh bandit0@bandit.labs.overthewire.org -p 2220
@@ -29,7 +29,7 @@ password: NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL
 
 Objective:
 
-The password for the next level is stored in a file called - located in the home directory.
+The password for the next level is stored in a file called "-" located in the home directory.
 
   Use flow redirection to read the file.
 
@@ -130,7 +130,7 @@ password: lrIWWI6bB37kxfiCQZqUdOIYfr6eEeqR
 
 Objective:
 
-The password for the next level is stored in a file somewhere under the inhere directory and has all of the following properties:
+The password for the next level is stored in a file somewhere under the "inhere" directory and has all of the following properties:
 
     human-readable
     1033 bytes in size
@@ -185,12 +185,6 @@ bandit6@bandit:~$ cat /var/lib/dpkg/info/bandit7.password
 z7WtoNQU2XfjmMtWA8u5rN4vzqu4v99S
 bandit6@bandit:~
 
-
-
-
-
-
-
 ---
 Level 7
 
@@ -199,24 +193,117 @@ password: z7WtoNQU2XfjmMtWA8u5rN4vzqu4v99S
 
 Objective:
 
-The password for the next level is stored in the file data.txt next to the word millionth
-Commands you may need to solve this level
+The password for the next level is stored in the file data.txt next to the word millionth.
 
-man, grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
+  $cat data.txt | grep millionth
+
+    With the pipe "|" we can use cat and grep to look through the text file because they are on the same line.
 
 CLI:
 
+  bandit7@bandit:~$ du -b data.txt
+  4184396	data.txt
+  bandit7@bandit:~$ cat data.txt | grep millionth
+  millionth	TESKZC0XvTetK0S9xNwm25STk5iWrBvP
+  bandit7@bandit:~$
+
+---
+Level 8
+
+ssh bandit8@bandit.labs.overthewire.org -p 2220
+password: TESKZC0XvTetK0S9xNwm25STk5iWrBvP
+
+Objective:
+
+The password for the next level is stored in the file data.txt and is the only line of text that occurs only once.
+
+$ sort data.txt | uniq -u
+
+CLI:
+
+bandit8@bandit:~$ ls
+data.txt
+bandit8@bandit:~$ sort data.txt | uniq -u
+EN632PlfYiZbn3PhVK3XOGSlNInNE00t
+
+---
+Level 9
+
+ssh bandit9@bandit.labs.overthewire.org -p 2220
+password: EN632PlfYiZbn3PhVK3XOGSlNInNE00t
+
+Objective:
+
+The password for the next level is stored in the file data.txt in one of the few human-readable strings, preceded by several ‘=’ characters.
+
+CLI:
+
+bandit9@bandit:~$ strings data.txt | grep ===
+x]T========== theG)"
+========== passwordk^
+========== is
+========== G7w8LIi6J3kTb8A7j9LgrywtEUlyyp6s
+bandit9@bandit:~$
+
+---
+Level 10
+
+ssh bandit10@bandit.labs.overthewire.org -p 2220
+password: G7w8LIi6J3kTb8A7j9LgrywtEUlyyp6s
+
+Objective:
+
+The password for the next level is stored in the file data.txt, which contains base64 encoded data.
+
+$ base64 -d data.txt
+
+CLI:
+
+bandit10@bandit:~$ base64 -d data.txt
+The password is 6zPeziLdR2RKNdNYFNb6nVCKzphlXHBM
+bandit10@bandit:~$
+
+---
+Level 11
+
+ssh bandit11@bandit.labs.overthewire.org -p 2220
+password: 6zPeziLdR2RKNdNYFNb6nVCKzphlXHBM
+
+Objective:
+
+The password for the next level is stored in the file data.txt, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions.
+
+$ cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+
+tr <old_chars> <new_chars> is the translate command
+ROT13 cipher: 'A-Za-z' 'N-ZA-Mn-za-m'
+ROT5 cipher: '5-90-4'
+
+CLI:
+
+bandit11@bandit:~$ cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+The password is JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv
+bandit11@bandit:~$
+
+---
+Level 12
+
+ssh bandit12@bandit.labs.overthewire.org -p 2220
+password: JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv
+
+Objective:
+
+The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under /tmp in which you can work using mkdir. For example: mkdir /tmp/myname123. Then copy the datafile using cp, and rename it using mv (read the manpages!)
 
 
-
-
+CLI:
 
 
 ===
 Template
 
 ssh bandit[]@bandit.labs.overthewire.org -p 2220
-password:
+password: 
 
 Objective:
 
@@ -247,6 +334,10 @@ man tar
 man gzip
 man bzip2
 man xxd
+man mkdir
+man cp
+man mv
+
 
 
 
