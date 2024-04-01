@@ -295,6 +295,240 @@ Objective:
 
 The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under /tmp in which you can work using mkdir. For example: mkdir /tmp/myname123. Then copy the datafile using cp, and rename it using mv (read the manpages!)
 
+CLI:
+
+bandit12@bandit:~$ mktemp -d
+/tmp/tmp.tXJKa7KVxR
+bandit12@bandit:~$ cd /tmp/tmp.tXJKa7KVxR
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ cp ~/data.txt .
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+data.txt
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ mv data.txt hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ cat hexdump_data | head
+00000000: 1f8b 0808 6855 1e65 0203 6461 7461 322e  ....hU.e..data2.
+...
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ xxd -r hexdump_data compressed_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ mv compressed_data compressed_data.gz
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data.gz  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ gzip -d compressed_data.gz
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ xxd compressed_data
+00000000: 425a 6839 3141 5926 5359 481b 3202 0000  BZh91AY&SYH.2...
+...
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ mv compressed_data compressed_data.bz2
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data.bz2  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ bzip2 -d compressed_data.bz2
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ xxd compressed_data
+00000000: 1f8b 0808 6855 1e65 0203 6461 7461 342e  ....hU.e..data4.
+...
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ mv compressed_data compressed_data.gz
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data.gz  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ gzip -d compressed_data.gz
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ cat compressed_data
+data5.bin0000644000000000000000000002400014507452550011247 0ustar  rootrootdata6.bin0000644000000000000000000000033114507452550011251 0ustar  rootrootBZh91AY&SYJ!�1����&�2i6��I�P�2���@�@4��k�ʀ@��8M|�V1@��P����2[j.�v'�1��s���TTI��V��*�A�^O
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ mv compressed_data compressed_data.tar
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data.tar  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ tar -xf compressed_data.tar
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data.tar  data5.bin  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ xxd data5.bin | head
+00000000: 6461 7461 362e 6269 6e00 0000 0000 0000  data6.bin.......
+...
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ tar -xf data5.bin
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data.tar  data5.bin  data6.bin  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ xxd data6.bin | head
+00000000: 425a 6839 3141 5926 5359 0403 8894 0000  BZh91AY&SY......
+...
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ bzip2 -d data6.bin
+bzip2: Can't guess original name for data6.bin -- using data6.bin.out
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data.tar  data5.bin  data6.bin.out  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ tar -xf data6.bin.out
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data.tar  data5.bin  data6.bin.out  data8.bin  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ xxd data8.bin
+00000000: 1f8b 0808 6855 1e65 0203 6461 7461 392e  ....hU.e..data9.
+...
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ mv data8.bin data8.gz
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data.tar  data5.bin  data6.bin.out  data8.gz  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ gzip -d data8.gz
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ ls
+compressed_data.tar  data5.bin  data6.bin.out  data8  hexdump_data
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$ cat data8
+The password is wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw
+bandit12@bandit:/tmp/tmp.tXJKa7KVxR$
+
+---
+Level 13
+
+ssh bandit13@bandit.labs.overthewire.org -p 2220
+password: wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw
+
+Objective:
+
+The password for the next level is stored in /etc/bandit_pass/bandit14 and can only be read by user bandit14. For this level, you don’t get the next password, but you get a private SSH key that can be used to log into the next level. Note: localhost is a hostname that refers to the machine you are working on.
+
+
+
+CLI:
+
+bandit13@bandit:~$ ssh -i sshkey.private bandit14@bandit.labs.overthewire.org -p 2220
+The authenticity of host '[bandit.labs.overthewire.org]:2220 ([127.0.0.1]:2220)' can't be established.
+ED25519 key fingerprint is SHA256:C2ihUBV7ihnV1wUXRb4RrEcLfXC5CXlhmAAM/urerLY.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Could not create directory '/home/bandit13/.ssh' (Permission denied).
+Failed to add the host to the list of known hosts (/home/bandit13/.ssh/known_hosts).
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+!!! You are trying to log into this SSH server with a password on port 2220 from localhost.
+!!! Connecting from localhost is blocked to conserve resources.
+!!! Please log out and log in again.
+
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+  Enjoy your stay!
+
+bandit14@bandit:~$ whoami
+bandit14
+bandit14@bandit:~$ cat etc/bandit_pass/bandit14
+cat: etc/bandit_pass/bandit14: No such file or directory
+bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
+fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq
+bandit14@bandit:~$ 
+
+---
+Level 14
+
+ssh -i sshkey.private bandit14@bandit.labs.overthewire.org -p 2220
+password: fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq
+
+Objective:
+
+The password for the next level can be retrieved by submitting the password of the current level to port 30000 on localhost.
+
+CLI:
+
+bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
+fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq
+bandit14@bandit:~$ nc  localhost 30000
+fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq
+Correct!
+jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt
+
+---
+Level 15
+
+ssh bandit15@bandit.labs.overthewire.org -p 2220
+password: jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt
+
+Objective:
+
+The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL encryption.
+
+CLI:
+
+bandit15@bandit:~$ openssl s_client -connect localhost:30001
+jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt
+Correct!
+JQttfApK4SeyHwDlI9SXGR50qclOAil1
+
+closed
+bandit15@bandit:~$
+
+---
+Level 16
+
+ssh bandit16@bandit.labs.overthewire.org -p 2220
+password: JQttfApK4SeyHwDlI9SXGR50qclOAil1
+
+Objective:
+
+The credentials for the next level can be retrieved by submitting the password of the current level to a port on localhost in the range 31000 to 32000. First find out which of these ports have a server listening on them. Then find out which of those speak SSL and which don’t. There is only 1 server that will give the next credentials, the others will simply send back to you whatever you send to it.
+
+CLI:
+
+bandit16@bandit:~$ nmap -sV localhost -p 31000-32000
+Starting Nmap 7.80 ( https://nmap.org ) at 2024-03-31 18:28 UTC
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00012s latency).
+Not shown: 996 closed ports
+PORT      STATE SERVICE     VERSION
+31046/tcp open  echo
+31518/tcp open  ssl/echo
+31691/tcp open  echo
+31790/tcp open  ssl/unknown
+31960/tcp open  echo
+
+bandit16@bandit:~$ openssl s_client -connect localhost:31790
+
+bandit16@bandit:~$ cd /tmp
+bandit16@bandit:/tmp$ touch 17key
+bandit16@bandit:/tmp$ nano 17key
+bandit16@bandit:/tmp$ cat 17key
+bandit16@bandit:/tmp$ chmod 600 17key
+bandit16@bandit:/tmp$ ls -l 17key
+-rw------- 1 bandit16 bandit16 1675 Mar 31 20:59 17key
+bandit16@bandit:/tmp$ ssh -i 17key bandit17@localhost -p 2220
+
+---
+Level 17
+
+ssh bandit16@bandit.labs.overthewire.org -p 2220
+password: JQttfApK4SeyHwDlI9SXGR50qclOAil1
+bandit16@bandit:~$ cd /tmp
+bandit16@bandit:/temp$ ssh -i 17key bandit17@localhost -p 2220
+
+Objective:
+
+There are 2 files in the homedirectory: passwords.old and passwords.new. The password for the next level is in passwords.new and is the only line that has been changed between passwords.old and passwords.new
+
+NOTE: if you have solved this level and see ‘Byebye!’ when trying to log into bandit18, this is related to the next level, bandit19.
 
 CLI:
 
@@ -307,14 +541,15 @@ password:
 
 Objective:
 
-
 CLI:
 
+---
+ssh -i sshkey.private bandit17@bandit.labs.overthewire.org -p 2220
+password: 
 
+Objective:
 
-
-
-
+CLI:
 ===
 Resources
 
@@ -337,6 +572,11 @@ man xxd
 man mkdir
 man cp
 man mv
+man telnet
+man nc
+man openssl
+man s_client
+man nmap
 
 
 
