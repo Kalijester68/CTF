@@ -491,6 +491,11 @@ Objective:
 
 The credentials for the next level can be retrieved by submitting the password of the current level to a port on localhost in the range 31000 to 32000. First find out which of these ports have a server listening on them. Then find out which of those speak SSL and which don’t. There is only 1 server that will give the next credentials, the others will simply send back to you whatever you send to it.
 
+Run nmap
+openssl s_client
+save access key in /tmp
+chmod 600
+
 CLI:
 
 bandit16@bandit:~$ nmap -sV localhost -p 31000-32000
@@ -528,11 +533,263 @@ Objective:
 
 There are 2 files in the homedirectory: passwords.old and passwords.new. The password for the next level is in passwords.new and is the only line that has been changed between passwords.old and passwords.new
 
+diff prints the difference between two files.
+
 NOTE: if you have solved this level and see ‘Byebye!’ when trying to log into bandit18, this is related to the next level, bandit19.
 
 CLI:
 
+bandit17@bandit:~$ ls
+passwords.new  passwords.old
+bandit17@bandit:~$ diff passwords.old passwords.new
+42c42
+< p6ggwdNHncnmCNxuAt0KtKVq185ZU7AW
+---
+> hga5tuuCLF6fFzUpnagiMN8ssu9LFrdg
+bandit17@bandit:~$
 
+---
+Level 18
+
+ssh bandit18@bandit.labs.overthewire.org -p 2220
+password: hga5tuuCLF6fFzUpnagiMN8ssu9LFrdg
+
+Objective:
+
+The password for the next level is stored in a file readme in the homedirectory. Unfortunately, someone has modified .bashrc to log you out when you log in with SSH.
+
+SSH also allows you to execute commands such as ls or cat.
+
+CLI:
+
+kali@Kali:~/Documents/CTF/OverTheWire$ ssh bandit18@bandit.labs.overthewire.org -p 2220 cat readme
+
+bandit18@bandit.labs.overthewire.org's password: 
+awhqfNnAbc1naukrpqDYcF95h7HoMTrC
+kali@Kali:~/Documents/CTF/OverTheWire$ 
+
+---
+Level 19
+
+ssh bandit19@bandit.labs.overthewire.org -p 2220
+password: awhqfNnAbc1naukrpqDYcF95h7HoMTrC
+
+Objective:
+
+To gain access to the next level, you should use the setuid binary in the homedirectory. Execute it without arguments to find out how to use it. The password for this level can be found in the usual place (/etc/bandit_pass), after you have used the setuid binary.
+
+Suid is a special permission, it will replace "x" of the user permission. The binary will run as owner, not the one executing it.
+
+CLI:
+
+bandit19@bandit:~$ ls -la
+total 36
+drwxr-xr-x  2 root     root      4096 Oct  5 06:19 .
+drwxr-xr-x 70 root     root      4096 Oct  5 06:20 ..
+-rwsr-x---  1 bandit20 bandit19 14876 Oct  5 06:19 bandit20-do
+-rw-r--r--  1 root     root       220 Jan  6  2022 .bash_logout
+-rw-r--r--  1 root     root      3771 Jan  6  2022 .bashrc
+-rw-r--r--  1 root     root       807 Jan  6  2022 .profile
+bandit19@bandit:~$ ./bandit20-do
+Run a command as another user.
+  Example: ./bandit20-do id
+bandit19@bandit:~$ ./bandit20-do ls /etc/bandit_pass
+bandit0   bandit13  bandit18  bandit22	bandit27  bandit31  bandit6
+bandit1   bandit14  bandit19  bandit23	bandit28  bandit32  bandit7
+bandit10  bandit15  bandit2   bandit24	bandit29  bandit33  bandit8
+bandit11  bandit16  bandit20  bandit25	bandit3   bandit4   bandit9
+bandit12  bandit17  bandit21  bandit26	bandit30  bandit5
+bandit19@bandit:~$ ./bandit20-do cat /etc/bandit_pass
+cat: /etc/bandit_pass: Is a directory
+bandit19@bandit:~$ ./bandit20-do cat /etc/bandit_pass/bandit20
+VxCazJaVykI6W36BkBU0mJTCM8rR95XT
+bandit19@bandit:~$ 
+
+---
+Level 20
+
+ssh bandit20@bandit.labs.overthewire.org -p 2220
+password: VxCazJaVykI6W36BkBU0mJTCM8rR95XT
+
+Objective:
+
+There is a setuid binary in the homedirectory that does the following: it makes a connection to localhost on the port you specify as a commandline argument. It then reads a line of text from the connection and compares it to the password in the previous level (bandit20). If the password is correct, it will transmit the password for the next level (bandit21). NOTE: Try connecting to your own network daemon to see if it works as you think.
+
+To create a one-time server, send one message then disconnect, we use "|" and echo. Netcat will create a connection in server mode that listens for an inbound connecter.
+
+-l means listening
+-n prevents newline charactor
+& to run in background
+
+CLI:
+
+bandit20@bandit:~$ echo -n 'VxCazJaVykI6W36BkBU0mJTCM8rR95XT' | nc -l -p 1234 &
+[1] 1356183
+bandit20@bandit:~$ ./suconnect 1234
+Could not connect
+[1]+  Done                    echo -n 'VxCazJaVykI6W36BkBU0mJTCM8rR95XT' | nc -l -p 1234
+bandit20@bandit:~$ echo -n 'VxCazJaVykI6W36BkBU0mJTCM8rR95XT' | nc -l -p 1234 &
+[1] 1357707
+bandit20@bandit:~$ ./suconnect 1234
+Read: VxCazJaVykI6W36BkBU0mJTCM8rR95XT
+Password matches, sending next password
+NvEJF7oVjkddltPSrdKEFOllh9V1IBcq
+bandit20@bandit:~$ 
+
+---
+Level 21
+
+ssh bandit21@bandit.labs.overthewire.org -p 2220
+password: NvEJF7oVjkddltPSrdKEFOllh9V1IBcq
+
+Objective:
+
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+$ ls -la /etc/cron.d
+$ cat /usr/bin/cronjob_bandit22.sh
+$ cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+
+CLI:
+
+bandit21@bandit:~$ ls -la /etc/cron.d
+total 56
+drwxr-xr-x   2 root root  4096 Oct  5 06:20 .
+drwxr-xr-x 106 root root 12288 Oct  5 06:20 ..
+-rw-r--r--   1 root root    62 Oct  5 06:19 cronjob_bandit15_root
+-rw-r--r--   1 root root    62 Oct  5 06:19 cronjob_bandit17_root
+-rw-r--r--   1 root root   120 Oct  5 06:19 cronjob_bandit22
+-rw-r--r--   1 root root   122 Oct  5 06:19 cronjob_bandit23
+-rw-r--r--   1 root root   120 Oct  5 06:19 cronjob_bandit24
+-rw-r--r--   1 root root    62 Oct  5 06:19 cronjob_bandit25_root
+-rw-r--r--   1 root root   201 Jan  8  2022 e2scrub_all
+-rwx------   1 root root    52 Oct  5 06:20 otw-tmp-dir
+-rw-r--r--   1 root root   102 Mar 23  2022 .placeholder
+-rw-r--r--   1 root root   396 Feb  2  2021 sysstat
+bandit21@bandit:~$ cat /etc/cron.d/cronjob_bandit22
+@reboot bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+* * * * * bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+bandit21@bandit:~$ cat /usr/bin/cronjob_bandit22.sh
+#!/bin/bash
+chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+bandit21@bandit:~$ cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+WdDozAdTM2z9DiFEQ2mGlwngMfj4EZff
+bandit21@bandit:~$
+
+---
+Level 22
+
+ssh bandit22@bandit.labs.overthewire.org -p 2220
+password: WdDozAdTM2z9DiFEQ2mGlwngMfj4EZff
+
+Objective:
+
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+var_name=var_value    declare a variable
+var_name=$(command)   save output of command as variable
+$var_name             access existing variable
+
+CLI:
+
+bandit22@bandit:~$ ls -la /etc/cron.d
+total 56
+drwxr-xr-x   2 root root  4096 Oct  5 06:20 .
+drwxr-xr-x 106 root root 12288 Oct  5 06:20 ..
+-rw-r--r--   1 root root    62 Oct  5 06:19 cronjob_bandit15_root
+-rw-r--r--   1 root root    62 Oct  5 06:19 cronjob_bandit17_root
+-rw-r--r--   1 root root   120 Oct  5 06:19 cronjob_bandit22
+-rw-r--r--   1 root root   122 Oct  5 06:19 cronjob_bandit23
+-rw-r--r--   1 root root   120 Oct  5 06:19 cronjob_bandit24
+-rw-r--r--   1 root root    62 Oct  5 06:19 cronjob_bandit25_root
+-rw-r--r--   1 root root   201 Jan  8  2022 e2scrub_all
+-rwx------   1 root root    52 Oct  5 06:20 otw-tmp-dir
+-rw-r--r--   1 root root   102 Mar 23  2022 .placeholder
+-rw-r--r--   1 root root   396 Feb  2  2021 sysstat
+bandit22@bandit:~$ cat /etc/cron.d/cronjob_bandit23
+@reboot bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+* * * * * bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+bandit22@bandit:~$ cat /usr/bin/cronjob_bandit23.sh
+#!/bin/bash
+
+myname=$(whoami)
+mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+
+echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
+
+cat /etc/bandit_pass/$myname > /tmp/$mytarget
+bandit22@bandit:~$ echo I am user bandit23 | md5sum | cut -d ' ' -f 1
+8ca319486bfbbc3663ea0fbe81326349
+bandit22@bandit:~$ cat /tmp/8ca319486bfbbc3663ea0fbe81326349
+QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
+bandit22@bandit:~$
+
+---
+Level 23
+
+ssh bandit23@bandit.labs.overthewire.org -p 2220
+password: QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G
+
+Objective:
+
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+NOTE: Looking at shell scripts written by other people is a very useful skill. The script for this level is intentionally made easy to read. If you are having problems understanding what it does, try executing it to see the debug information it prints.
+
+NOTE 2: Keep in mind that your shell script is removed once executed, so you may want to keep a copy around…
+
+CLI:
+
+bandit23@bandit:~$ mkdir /tmp/rand
+bandit23@bandit:~$ cd /tmp/rand
+bandit23@bandit:/tmp/rand$ touch script.sh
+bandit23@bandit:/tmp/rand$ ls
+script.sh
+bandit23@bandit:/tmp/rand$ nano script.sh
+  #!/bin/sh
+  chmod 777 pcdir123
+bandit23@bandit:/tmp/rand$ touch password
+bandit23@bandit:/tmp/rand$ cd ../
+bandit23@bandit:/tmp$ chmod 777 rand
+bandit23@bandit:/tmp$ cd rand
+bandit23@bandit:/tmp/rand$ cat script.sh
+#!/bin/bash
+cat /etc/bandit_pass/bandit24 > /tmp/rand/password
+bandit23@bandit:/tmp/rand$ ls
+password  script.sh
+bandit23@bandit:/tmp/rand$ chmod 777 script.sh
+bandit23@bandit:/tmp/rand$ ls -la
+total 408
+drwxrwxrwx   2 bandit23 bandit23   4096 Apr  1 14:00 .
+drwxrwx-wt 103 root     root     405504 Apr  1 14:13 ..
+-rwxrwxrwx   1 bandit23 bandit23      0 Apr  1 13:53 password
+-rwxrwxrwx   1 bandit23 bandit23     63 Apr  1 13:53 script.sh
+bandit23@bandit:/tmp/rand$ cp script.sh /var/spool/bandit24/foo
+bandit23@bandit:/tmp/rand$ ls -la
+total 408
+drwxrwxrwx   2 bandit23 bandit23   4096 Apr  1 14:00 .
+drwxrwx-wt 103 root     root     405504 Apr  1 14:18 ..
+-rwxrwxrwx   1 bandit23 bandit23      0 Apr  1 13:53 password
+-rwxrwxrwx   1 bandit23 bandit23     63 Apr  1 13:53 script.sh
+bandit23@bandit:/tmp/rand$ ls
+password  script.sh
+bandit23@bandit:/tmp/rand$ cat password
+VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar
+bandit23@bandit:/tmp/rand$ 
+
+---
+Level 24
+
+ssh bandit24@bandit.labs.overthewire.org -p 2220
+password: VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar
+
+Objective:
+
+A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations, called brute-forcing.
+You do not need to create new connections each time.
+
+CLI:
 ===
 Template
 
@@ -577,7 +834,13 @@ man nc
 man openssl
 man s_client
 man nmap
-
-
+man bash
+man screen
+man tmux
+man Unix 
+man job control’ (bg, fg, jobs, &, CTRL-Z, …)
+man cron, 
+man crontab
+man crontab(5) (use “man 5 crontab” to access this)
 
 
