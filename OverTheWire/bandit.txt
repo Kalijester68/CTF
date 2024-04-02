@@ -899,7 +899,47 @@ Clone the repository and find the password for the next level.
 
 CLI:
 
+bandit27@bandit:~$ mktemp -d
+/tmp/tmp.KuHdXPAYk2
+bandit27@bandit:~$ cd /tmp/tmp.KuHdXPAYk2
+bandit27@bandit:/tmp/tmp.KuHdXPAYk2$ ls
 
+bandit27@bandit:/tmp/tmp.KuHdXPAYk2$ git clone ssh://bandit27-git@localhost:2220/home/bandit27-git/repo
+Cloning into 'repo'...
+bandit27-git@localhost's password: 
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (3/3), done.
+
+bandit27@bandit:/tmp/tmp.KuHdXPAYk2$ ls
+repo
+bandit27@bandit:/tmp/tmp.KuHdXPAYk2$ cd repo
+bandit27@bandit:/tmp/tmp.KuHdXPAYk2/repo$ 
+bandit27@bandit:/tmp/tmp.KuHdXPAYk2/repo$ ls -la
+total 16
+drwxrwxr-x 3 bandit27 bandit27 4096 Apr  2 19:43 .
+drwx------ 3 bandit27 bandit27 4096 Apr  2 19:43 ..
+drwxrwxr-x 8 bandit27 bandit27 4096 Apr  2 19:43 .git
+-rw-rw-r-- 1 bandit27 bandit27   68 Apr  2 19:43 README
+bandit27@bandit:/tmp/tmp.KuHdXPAYk2/repo$ cat README
+The password to the next level is: AVanL161y9rsbcJIsFHuw35rjaOM19nR
+bandit27@bandit:/tmp/tmp.KuHdXPAYk2/repo$ 
+
+---
+Level 28
+
+ssh bandit28@bandit.labs.overthewire.org -p 2220
+password: AVanL161y9rsbcJIsFHuw35rjaOM19nR
+
+Objective:
+
+There is a git repository at ssh://bandit28-git@localhost/home/bandit28-git/repo via the port 2220. The password for the user bandit28-git is the same as for the user bandit28.
+
+Clone the repository and find the password for the next level.
+
+CLI:
 ===
 Template
 
@@ -910,13 +950,328 @@ Objective:
 
 CLI:
 
----
-ssh -i sshkey.private bandit17@bandit.labs.overthewire.org -p 2220
-password: 
+bandit28@bandit:~$ mktemp -d
+/tmp/tmp.KWGAJSSlGx
+bandit28@bandit:~$ cd /tmp/tmp.KWGAJSSlGx
+
+bandit28@bandit:/tmp/tmp.KWGAJSSlGx$ git clone ssh://bandit28-git@localhost:2220/home/bandit28-git/repo
+Cloning into 'repo'...
+bandit28-git@localhost's password: 
+remote: Enumerating objects: 9, done.
+remote: Counting objects: 100% (9/9), done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 9 (delta 2), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (9/9), done.
+Resolving deltas: 100% (2/2), done.
+
+bandit28@bandit:/tmp/tmp.KWGAJSSlGx$ ls
+repo
+bandit28@bandit:/tmp/tmp.KWGAJSSlGx$ cd repo
+bandit28@bandit:/tmp/tmp.KWGAJSSlGx/repo$ ls -la
+total 16
+drwxrwxr-x 3 bandit28 bandit28 4096 Apr  2 20:04 .
+drwx------ 3 bandit28 bandit28 4096 Apr  2 20:04 ..
+drwxrwxr-x 8 bandit28 bandit28 4096 Apr  2 20:04 .git
+-rw-rw-r-- 1 bandit28 bandit28  111 Apr  2 20:04 README.md
+
+bandit28@bandit:/tmp/tmp.KWGAJSSlGx/repo$ cat README.md
+# Bandit Notes
+Some notes for level29 of bandit.
+
+## credentials
+
+- username: bandit29
+- password: xxxxxxxxxx
+
+
+bandit28@bandit:/tmp/tmp.KWGAJSSlGx/repo$ git log
+commit 14f754b3ba6531a2b89df6ccae6446e8969a41f3 (HEAD -> master, origin/master, origin/HEAD)
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu Oct 5 06:19:41 2023 +0000
+
+    fix info leak
+
+commit f08b9cc63fa1a4602fb065257633c2dae6e5651b
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu Oct 5 06:19:41 2023 +0000
+
+    add missing data
+
+commit a645bcc508c63f081234911d2f631f87cf469258
+Author: Ben Dover <noone@overthewire.org>
+Date:   Thu Oct 5 06:19:41 2023 +0000
+
+    initial commit of README.md
+bandit28@bandit:/tmp/tmp.KWGAJSSlGx/repo$ git show f08b9cc63fa1a4602fb065257633c2dae6e5651b
+commit f08b9cc63fa1a4602fb065257633c2dae6e5651b
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu Oct 5 06:19:41 2023 +0000
+
+    add missing data
+
+diff --git a/README.md b/README.md
+index 7ba2d2f..b302105 100644
+--- a/README.md
++++ b/README.md
+@@ -4,5 +4,5 @@ Some notes for level29 of bandit.
+ ## credentials
+ 
+ - username: bandit29
+-- password: <TBD>
++- password: tQKvmcwNYcFS6vmPHIUSI3ShmsrQZK8S
+ 
+bandit28@bandit:/tmp/tmp.KWGAJSSlGx/repo$
+
+--- Level 29
+
+ssh bandit29@bandit.labs.overthewire.org -p 2220
+password: tQKvmcwNYcFS6vmPHIUSI3ShmsrQZK8S
 
 Objective:
 
+There is a git repository at ssh://bandit29-git@localhost/home/bandit29-git/repo via the port 2220. The password for the user bandit29-git is the same as for the user bandit29.
+
+Clone the repository and find the password for the next level.
+
 CLI:
+
+bandit29@bandit:~$ mktemp -d
+/tmp/tmp.kLJgDrE6Pl
+bandit29@bandit:~$ cd /tmp/tmp.kLJgDrE6Pl
+
+bandit29@bandit:/tmp/tmp.kLJgDrE6Pl$ git clone ssh://bandit29-git@localhost:2220/home/bandit29-git/repo
+Cloning into 'repo'...
+bandit29-git@localhost's password: 
+remote: Enumerating objects: 16, done.
+remote: Counting objects: 100% (16/16), done.
+remote: Compressing objects: 100% (11/11), done.
+remote: Total 16 (delta 2), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (16/16), done.
+Resolving deltas: 100% (2/2), done.
+
+bandit29@bandit:/tmp/tmp.kLJgDrE6Pl$ ls
+repo
+bandit29@bandit:/tmp/tmp.kLJgDrE6Pl$ cd repo
+bandit29@bandit:/tmp/tmp.kLJgDrE6Pl/repo$ ls -la
+total 16
+drwxrwxr-x 3 bandit29 bandit29 4096 Apr  2 20:25 .
+drwx------ 3 bandit29 bandit29 4096 Apr  2 20:25 ..
+drwxrwxr-x 8 bandit29 bandit29 4096 Apr  2 20:25 .git
+-rw-rw-r-- 1 bandit29 bandit29  131 Apr  2 20:25 README.md
+
+bandit29@bandit:/tmp/tmp.kLJgDrE6Pl/repo$ cat README.md
+# Bandit Notes
+Some notes for bandit30 of bandit.
+
+## credentials
+
+- username: bandit30
+- password: <no passwords in production!>
+
+bandit29@bandit:/tmp/tmp.kLJgDrE6Pl/repo$ git branch -a
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/dev
+  remotes/origin/master
+  remotes/origin/sploits-dev
+
+bandit29@bandit:/tmp/tmp.kLJgDrE6Pl/repo$ git checkout dev
+Branch 'dev' set up to track remote branch 'dev' from 'origin'.
+Switched to a new branch 'dev'
+bandit29@bandit:/tmp/tmp.kLJgDrE6Pl/repo$ ls -la
+total 20
+drwxrwxr-x 4 bandit29 bandit29 4096 Apr  2 20:26 .
+drwx------ 3 bandit29 bandit29 4096 Apr  2 20:25 ..
+drwxrwxr-x 2 bandit29 bandit29 4096 Apr  2 20:26 code
+drwxrwxr-x 8 bandit29 bandit29 4096 Apr  2 20:26 .git
+-rw-rw-r-- 1 bandit29 bandit29  134 Apr  2 20:26 README.md
+
+bandit29@bandit:/tmp/tmp.kLJgDrE6Pl/repo$ cat README.md
+# Bandit Notes
+Some notes for bandit30 of bandit.
+
+## credentials
+
+- username: bandit30
+- password: xbhV3HpNGlTIdnjUrdAlPzc2L6y9EOnS
+
+bandit29@bandit:/tmp/tmp.kLJgDrE6Pl/repo$
+
+---
+Level 30
+
+ssh bandit30@bandit.labs.overthewire.org -p 2220
+password: xbhV3HpNGlTIdnjUrdAlPzc2L6y9EOnS
+
+Objective:
+
+There is a git repository at ssh://bandit30-git@localhost:2220/home/bandit30-git/repo via the port 2220. The password for the user bandit30-git is the same as for the user bandit30.
+
+Clone the repository and find the password for the next level.
+
+CLI:
+
+bandit30@bandit:~$ mktemp -d
+/tmp/tmp.8MJdmmbENz
+bandit30@bandit:~$ cd /tmp/tmp.8MJdmmbENz
+
+bandit30@bandit:/tmp/tmp.8MJdmmbENz$ git clone ssh://bandit30-git@localhost:2220/home/bandit30-git/repo
+Cloning into 'repo'...
+bandit30-git@localhost's password: 
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (4/4), done.
+bandit30@bandit:/tmp/tmp.8MJdmmbENz$ ls
+repo
+
+bandit30@bandit:/tmp/tmp.8MJdmmbENz$ cd repo
+bandit30@bandit:/tmp/tmp.8MJdmmbENz/repo$ ls
+README.md
+bandit30@bandit:/tmp/tmp.8MJdmmbENz/repo$ cat README.md
+just an epmty file... muahaha
+bandit30@bandit:/tmp/tmp.8MJdmmbENz/repo$ git tag
+secret
+bandit30@bandit:/tmp/tmp.8MJdmmbENz/repo$ git show secret
+OoffzGDlzhAlerFJ2cAiz1D41JW1Mhmt
+bandit30@bandit:/tmp/tmp.8MJdmmbENz/repo$
+
+---
+Level 31
+
+ssh bandit31@bandit.labs.overthewire.org -p 2220
+password: OoffzGDlzhAlerFJ2cAiz1D41JW1Mhmt
+
+Objective:
+
+There is a git repository at ssh://bandit31-git@localhost:2220/home/bandit31-git/repo via the port 2220. The password for the user bandit31-git is the same as for the user bandit31.
+
+Clone the repository and find the password for the next level.
+
+CLI:
+
+bandit31@bandit:~$ mktemp -d
+/tmp/tmp.lgVyuuL42w
+bandit31@bandit:~$ /tmp/tmp.lgVyuuL42w
+-bash: /tmp/tmp.lgVyuuL42w: Is a directory
+bandit31@bandit:~$ cd /tmp/tmp.lgVyuuL42w
+
+bandit31@bandit:/tmp/tmp.lgVyuuL42w$ git clone ssh://bandit31-git@localhost:2220/home/bandit31-git/repo
+Cloning into 'repo'...
+bandit31-git@localhost's password: 
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (4/4), done.
+
+bandit31@bandit:/tmp/tmp.lgVyuuL42w$ ls
+repo
+bandit31@bandit:/tmp/tmp.lgVyuuL42w$ cd repo
+bandit31@bandit:/tmp/tmp.lgVyuuL42w/repo$ ls -la
+total 20
+drwxrwxr-x 3 bandit31 bandit31 4096 Apr  2 21:26 .
+drwx------ 3 bandit31 bandit31 4096 Apr  2 21:26 ..
+drwxrwxr-x 8 bandit31 bandit31 4096 Apr  2 21:26 .git
+-rw-rw-r-- 1 bandit31 bandit31    6 Apr  2 21:26 .gitignore
+-rw-rw-r-- 1 bandit31 bandit31  147 Apr  2 21:26 README.md
+bandit31@bandit:/tmp/tmp.lgVyuuL42w/repo$ cat README.md
+This time your task is to push a file to the remote repository.
+
+Details:
+    File name: key.txt
+    Content: 'May I come in?'
+    Branch: master
+
+bandit31@bandit:/tmp/tmp.lgVyuuL42w/repo$ echo 'May I come in?' > key.txt
+bandit31@bandit:/tmp/tmp.lgVyuuL42w/repo$ ls -la
+total 24
+drwxrwxr-x 3 bandit31 bandit31 4096 Apr  2 21:30 .
+drwx------ 3 bandit31 bandit31 4096 Apr  2 21:26 ..
+drwxrwxr-x 8 bandit31 bandit31 4096 Apr  2 21:26 .git
+-rw-rw-r-- 1 bandit31 bandit31    6 Apr  2 21:26 .gitignore
+-rw-rw-r-- 1 bandit31 bandit31   15 Apr  2 21:30 key.txt
+-rw-rw-r-- 1 bandit31 bandit31  147 Apr  2 21:26 README.md
+
+bandit31@bandit:/tmp/tmp.lgVyuuL42w/repo$ git add -f key.txt
+bandit31@bandit:/tmp/tmp.lgVyuuL42w/repo$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   key.txt
+
+bandit31@bandit:/tmp/tmp.lgVyuuL42w/repo$ git commit -a
+bandit31-git@localhost's password: 
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 321 bytes | 321.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+remote: ### Attempting to validate files... ####
+remote: 
+remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+remote: 
+remote: Well done! Here is the password for the next level:
+remote: rmCBvG56y58BXzv98yZGdO7ATVL5dW8y 
+remote: 
+remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+
+bandit31@bandit:/tmp/tmp.lgVyuuL42w/repo$
+
+---
+Level 32
+
+ssh bandit32@bandit.labs.overthewire.org -p 2220
+password: rmCBvG56y58BXzv98yZGdO7ATVL5dW8y
+
+Objective:
+
+After all this git stuff its time for another escape. Good luck!
+
+CLI:
+
+WELCOME TO THE UPPERCASE SHELL
+>> ls
+sh: 1: LS: Permission denied
+>> $0
+$ ls -la
+total 36
+drwxr-xr-x  2 root     root      4096 Oct  5 06:19 .
+drwxr-xr-x 70 root     root      4096 Oct  5 06:20 ..
+-rw-r--r--  1 root     root       220 Jan  6  2022 .bash_logout
+-rw-r--r--  1 root     root      3771 Jan  6  2022 .bashrc
+-rw-r--r--  1 root     root       807 Jan  6  2022 .profile
+-rwsr-x---  1 bandit33 bandit32 15128 Oct  5 06:19 uppershell
+$ whoami
+bandit33
+$ cat /etc/bandit\_pass/bandit33
+odHo63fHiFqcWWJG9rLiLDtPm45KzUKy
+$ 
+
+---
+Level 33
+
+ssh bandit33@bandit.labs.overthewire.org -p 2220
+password: odHo63fHiFqcWWJG9rLiLDtPm45KzUKy
+
+CLI:
+
+bandit33@bandit:~$ ls
+README.txt
+bandit33@bandit:~$ cat README.txt
+Congratulations on solving the last level of this game!
+
+At this moment, there are no more levels to play in this game. However, we are constantly working
+on new levels and will most likely expand this game with more levels soon.
+Keep an eye out for an announcement on our usual communication channels!
+In the meantime, you could play some of our other wargames.
+
+If you have an idea for an awesome new level, please let us know!
+bandit33@bandit:~$ 
+
 ===
 Resources
 
@@ -957,5 +1312,5 @@ man vi
 man ls
 man id
 man pwd
-
+man sh
 
