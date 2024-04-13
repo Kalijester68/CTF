@@ -1,0 +1,209 @@
+Table of Contents
+
+  Obedient Cat
+  Mod 26
+  Python Wrangling
+  Wave a Flag
+  Information
+  Nice Netcat
+  Transformation
+
+Gym
+
+===
+  
+Obedient Cat
+
+Description
+
+This file has a flag in plain sight (aka "in-the-clear"). Download flag.
+
+https://mercury.picoctf.net/static/fb851c1858cc762bd4eed569013d7f00/flag
+
+$ wget "https://mercury.picoctf.net/static/fb851c1858cc762bd4eed569013d7f00/flag"
+$ ls
+$ cat flag
+        
+picoCTF{s4n1ty_v3r1f13d_28e8376d}
+
+$ man wget
+$ man cat
+
+===
+
+Mod 26
+
+Description
+
+Cryptography can be easy, do you know what ROT13 is? cvpbPGS{arkg_gvzr_V'yy_gel_2_ebhaqf_bs_ebg13_GYpXOHqX}
+
+https://rot13.com/
+
+cvpbPGS{arkg_gvzr_V'yy_gel_2_ebhaqf_bs_ebg13_GYpXOHqX}
+          
+picoCTF{next_time_I'll_try_2_rounds_of_rot13_TLcKBUdK}
+
+===
+
+Python Wrangling
+
+Description
+
+Python scripts are invoked kind of like programs in the Terminal... Can you run this Python script using this password to get the flag?
+
+https://mercury.picoctf.net/static/5c4c0cbfbc149f3b0fc55c26f36ee707/ende.py
+https://mercury.picoctf.net/static/5c4c0cbfbc149f3b0fc55c26f36ee707/pw.txt
+https://mercury.picoctf.net/static/5c4c0cbfbc149f3b0fc55c26f36ee707/flag.txt.en
+      
+$ wget "https://mercury.picoctf.net/static/5c4c0cbfbc149f3b0fc55c26f36ee707/ende.py"
+$ wget "https://mercury.picoctf.net/static/5c4c0cbfbc149f3b0fc55c26f36ee707/pw.txt"
+$ wget "https://mercury.picoctf.net/static/5c4c0cbfbc149f3b0fc55c26f36ee707/flag.txt.en"
+
+$ nano ende.py
+$ cat pw.txt
+  192ee2db192ee2db192ee2db192ee2db        
+$ python ende.py -d flag.txt.en
+  Please enter the password:
+
+picoCTF{4p0110_1n_7h3_h0us3_192ee2db}
+
+$ man python
+$ man nano
+
+===
+
+Wave a flag
+
+Description
+
+Can you invoke help flags for a tool or binary? This program has extraordinarily helpful information...
+
+https://mercury.picoctf.net/static/a00f554b16385d9970dae424f66ee1ab/warm
+
+This program will only work in the webshell or another Linux computer.
+
+Run this program by entering the following in the Terminal prompt: $ ./warm, but you'll first have to make it executable with $ chmod +x warm
+
+-h and --help are the most common arguments to give to programs to get more information from them!
+
+Not every program implements help features like -h and --help.
+
+$ wget "https://mercury.picoctf.net/static/a00f554b16385d9970dae424f66ee1ab/warm"
+$ chmod +x warm
+$ ./warm
+  Hello user! Pass me a -h to learn what I can do!
+$ ./warm -h
+
+picoCTF{b1scu1ts_4nd_gr4vy_18788aaa}
+
+===
+
+Information
+
+Description
+Files can always be changed in a secret way. Can you find the flag? cat.jpg
+
+Look at the details of the file
+
+Make sure to submit the flag as picoCTF{XXXXX}
+
+https://mercury.picoctf.net/static/7cf6a33f90deeeac5c73407a1bdc99b6/cat.jpg
+
+$ wget "https://mercury.picoctf.net/static/7cf6a33f90deeeac5c73407a1bdc99b6/cat.jpg"
+$ exiftool cat.jpg
+  Licence looks like base64
+
+  cGljb0NURnt0aGVfbTN0YWRhdGFfMXNfbW9kaWZpZWR9
+
+https://www.base64decode.org/
+
+picoCTF{the_m3tadata_1s_modified}
+
+$ man exiftool
+
+===
+
+Nice netcat...
+
+Description
+
+There is a nice program that you can talk to by using this command in a shell: $ nc mercury.picoctf.net 7449, but it doesn't speak English...
+
+You can practice using netcat with this picoGym problem: what's a netcat?
+
+You can practice reading and writing ASCII with this picoGym problem: Let's Warm Up
+
+$ nc mercury.picoctf.net 7449
+
+https://www.duplichecker.com/ascii-to-text.php
+
+picoCTF{g00d_k1tty!_n1c3_k1tty!_f2d7cafa}
+
+===
+
+Transformation
+
+Description
+
+I wonder what this really is... enc ''.join([chr((ord(flag[i]) << 8) + ord(flag[i + 1])) for i in range(0, len(flag), 2)])
+
+You may find some decoders online
+
+kalijester68-picoctf@webshell:~$ wget https://mercury.picoctf.net/static/77a2b202236aa741e988581e78d277a6/enc
+--2024-04-13 16:38:39--  https://mercury.picoctf.net/static/77a2b202236aa741e988581e78d277a6/enc
+Resolving mercury.picoctf.net (mercury.picoctf.net)... 18.189.209.142
+Connecting to mercury.picoctf.net (mercury.picoctf.net)|18.189.209.142|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 57 [application/octet-stream]
+Saving to: 'enc'
+
+enc                 100%[==================>]      57  --.-KB/s    in 0s      
+
+2024-04-13 16:38:39 (26.0 MB/s) - 'enc' saved [57/57]
+
+kalijester68-picoctf@webshell:~$ ls
+PicoCTF  README.txt  completed  enc
+kalijester68-picoctf@webshell:~$ cat enc
+kalijester68-picoctf@webshell:~$ 
+kalijester68-picoctf@webshell:~$ python
+Python 3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> enc=open("enc").read()
+>>> print(enc[0])
+灩
+>>> for c in enc:
+...     print(hex(ord(c)).lstrip("0x"),end='')
+... 
+7069636f4354467b31365f626974735f696e73743334645f6f665f385f37356434383938627d>>>
+>>> 
+
+Convert Hex to ASCII online
+
+===
+
+Stonks
+
+Description
+
+I decided to try something noone else has before. I made a bot to automatically trade stonks for me using AI and machine learning. I wouldn't believe you if you told me it's unsecure! vuln.c nc mercury.picoctf.net 27912
+
+Okay, maybe I'd believe you if you find my API key.
+
+
+
+===
+Notes
+
+    $ man wget
+    $ man cat
+    $ man python
+    $ man nano
+    $ man exiftool
+    $ man nc
+
+Links
+
+  https://rot13.com/
+  https://www.base64decode.org/
+  https://www.duplichecker.com/ascii-to-text.php
+  

@@ -149,7 +149,49 @@ I wonder what this really is... enc ''.join([chr((ord(flag[i]) << 8) + ord(flag[
 
 You may find some decoders online
 
+kalijester68-picoctf@webshell:~$ wget https://mercury.picoctf.net/static/77a2b202236aa741e988581e78d277a6/enc
+--2024-04-13 16:38:39--  https://mercury.picoctf.net/static/77a2b202236aa741e988581e78d277a6/enc
+Resolving mercury.picoctf.net (mercury.picoctf.net)... 18.189.209.142
+Connecting to mercury.picoctf.net (mercury.picoctf.net)|18.189.209.142|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 57 [application/octet-stream]
+Saving to: 'enc'
 
+enc                 100%[==================>]      57  --.-KB/s    in 0s      
+
+2024-04-13 16:38:39 (26.0 MB/s) - 'enc' saved [57/57]
+
+kalijester68-picoctf@webshell:~$ ls
+PicoCTF  README.txt  completed  enc
+kalijester68-picoctf@webshell:~$ cat enc
+kalijester68-picoctf@webshell:~$ 
+kalijester68-picoctf@webshell:~$ python
+Python 3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> enc=open("enc").read()
+>>> print(enc[0])
+灩
+>>> for c in enc:
+...     print(hex(ord(c)).lstrip("0x"),end='')
+... 
+7069636f4354467b31365f626974735f696e73743334645f6f665f385f37356434383938627d>>>
+>>> 
+
+Convert Hex to ASCII online
+
+===
+
+Stonks
+
+Description
+
+I decided to try something noone else has before. I made a bot to automatically trade stonks for me using AI and machine learning. I wouldn't believe you if you told me it's unsecure! vuln.c nc mercury.picoctf.net 27912
+
+Okay, maybe I'd believe you if you find my API key.
+
+
+
+===
 Notes
 
     $ man wget
