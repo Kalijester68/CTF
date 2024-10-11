@@ -1,0 +1,10 @@
+OpenVPN
+
+GUI
+"+" import from file
+navigate to extracted .opvpn file
+
+CLI
+cd/ [directory].opvpn
+
+*CTRL+C to close terminal and end sesstion
